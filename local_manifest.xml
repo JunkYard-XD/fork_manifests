@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
 
+  <remote  name="ypx"
+           fetch="https://github.com/yaapex"
+           revision="refs/heads/16.2" />
+
   <remote  name="ext"
            fetch="https://github.com/yaapex"
-           revision="refs/heads/16" />
+           revision="refs/heads/x16.2" />
 
   <!-- Remove yaap repo -->
   <remove-project path="bionic" />
   <remove-project path="build/make" />
+  <remove-project path="build/soong" />
   <remove-project path="frameworks/av" />
   <remove-project path="frameworks/base" />
   <remove-project path="frameworks/native" />
@@ -17,8 +22,8 @@
   <remove-project path="vendor/yaap" />
 
   <!-- Ext additions -->
-  <project path="bionic" name="bionic" remote="ext" />
-  <project path="build/make" name="build" remote="ext" >
+  <project path="bionic" name="bionic" remote="ypx" />
+  <project path="build/make" name="build_make" remote="ext" >
    <copyfile src="core/root.mk" dest="Makefile" />
    <linkfile src="CleanSpec.mk" dest="build/CleanSpec.mk" />
    <linkfile src="buildspec.mk.default" dest="build/buildspec.mk.default" />
@@ -27,11 +32,15 @@
    <linkfile src="target" dest="build/target" />
    <linkfile src="tools" dest="build/tools" />
   </project>
+  <project path="build/soong" name="build_soong" remote="ext" >
+   <linkfile src="root.bp" dest="Android.bp" />
+   <linkfile src="bootstrap.bash" dest="bootstrap.bash" />
+  </project>
   <project path="frameworks/av" name="frameworks_av" remote="ext" />
-  <project path="frameworks/base" name="frameworks_base" remote="ext" />
+  <project path="frameworks/base" name="frameworks_base-16.2" remote="ext" />
   <project path="frameworks/native" name="frameworks_native" remote="ext" />
   <project path="packages/apps/Settings" name="packages_apps_Settings" remote="ext" />
-  <project path="packages/apps/Settings/YASP" name="packages_apps_YASP" remote="ext" />
+  <project path="packages/apps/Settings/YASP" name="packages_apps_YASP" remote="ypx" />
   <project path="system/core" name="system_core" remote="ext" />
   <project path="vendor/yaap" name="vendor_yaap" remote="ext" />
 
